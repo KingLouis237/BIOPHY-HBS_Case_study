@@ -1,0 +1,13 @@
+structure,chain,residue_number,residue_name,classification,min_distance
+4HHB,B,4,THR,polar,3.03
+4HHB,B,5,PRO,hydrophobic,1.37
+4HHB,B,7,GLU,negative,1.20
+4HHB,B,8,LYS,positive,3.42
+4HHB,B,9,SER,polar,3.25
+4HHB,B,10,ALA,hydrophobic,2.87
+2HBS,B,7,GLU,negative,1.33
+2HBS,B,8,LYS,positive,3.30
+2HBS,B,9,SER,polar,3.54
+2HBS,B,4,THR,polar,2.89
+2HBS,B,5,PRO,hydrophobic,1.33
+2HBS,B,10,ALA,hydrophobic,2.99

@@ -1,0 +1,80 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 1 /Kids [3 0 R] >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 4438 >>
+stream
+BT /F1 10 Tf 72 760.0 Td (HEMOGLOBIN BETA E6V VARIANT — SEQUENCE-TO-STRUCTURE INTERPRETATION) Tj ET
+BT /F1 10 Tf 72 736.0 Td (**Author:** Louis Ashu Abane) Tj ET
+BT /F1 10 Tf 72 724.0 Td (**Origin:** Reframed from an archived graduate bioinformatics practicum brief \(see) Tj ET
+BT /F1 10 Tf 72 712.0 Td (`docs/archive/INFO-F434_assignment_original.pdf`\).) Tj ET
+BT /F1 10 Tf 72 700.0 Td (**Date reformatted:** 11 March 2026.) Tj ET
+BT /F1 10 Tf 72 676.0 Td (Context) Tj ET
+BT /F1 10 Tf 72 664.0 Td (This professional brief preserves the underlying scientific workflow while removing) Tj ET
+BT /F1 10 Tf 72 652.0 Td (classroom-specific language. The goal is to communicate a reproducible, inspectable) Tj ET
+BT /F1 10 Tf 72 640.0 Td (portfolio narrative; novelty or clinical claims are not implied.) Tj ET
+BT /F1 10 Tf 72 616.0 Td (Objective) Tj ET
+BT /F1 10 Tf 72 604.0 Td (Diagnose the molecular consequence of the unknown "secret" globin sequence by linking) Tj ET
+BT /F1 10 Tf 72 592.0 Td (curated sequence evidence, substitution scoring, and structural inspection.) Tj ET
+BT /F1 10 Tf 72 568.0 Td (Data & Inputs) Tj ET
+BT /F1 10 Tf 72 556.0 Td (* UniProt reviewed entries P69905 \(HBA\) and P68871 \(HBB\).) Tj ET
+BT /F1 10 Tf 72 544.0 Td (* Provided secret alpha/beta FASTA files stored under `data/raw/secret_sequences/`.) Tj ET
+BT /F1 10 Tf 72 532.0 Td (* Interaction metadata via BioGRID and IntAct cross-references \(documented as an appendix) Tj ET
+BT /F1 10 Tf 72 520.0 Td (caution\).) Tj ET
+BT /F1 10 Tf 72 508.0 Td (* PDB structures: 4HHB \(hemoglobin A\) and 2HBS \(hemoglobin S\).) Tj ET
+BT /F1 10 Tf 72 496.0 Td (* Literature: Suhail 2024 \(*Scientific Reports* 14:52476\) and Donkor et al. 2023) Tj ET
+BT /F1 10 Tf 72 484.0 Td (\(*Frontiers Mol. Biosci.* 10:1136970\).) Tj ET
+BT /F1 10 Tf 72 460.0 Td (Methods) Tj ET
+BT /F1 10 Tf 72 448.0 Td (1. **Sequence retrieval** — Python scripts download UniProt sequences, metadata, and) Tj ET
+BT /F1 10 Tf 72 436.0 Td (provenance logs.) Tj ET
+BT /F1 10 Tf 72 424.0 Td (2. **Interaction audit \(appendix\)** — BioGRID vs IntAct interactors are summarized to) Tj ET
+BT /F1 10 Tf 72 412.0 Td (emphasize database-specific evidence.) Tj ET
+BT /F1 10 Tf 72 400.0 Td (3. **Parameter calibration** — BRCA1 vs 53BP1 dotplots/global alignments illustrate how) Tj ET
+BT /F1 10 Tf 72 388.0 Td (wordsize, threshold, and gap penalties impact sensitivity.) Tj ET
+BT /F1 10 Tf 72 376.0 Td (4. **Variant localization** — Canonical vs secret alpha/beta alignments reveal identical) Tj ET
+BT /F1 10 Tf 72 364.0 Td (alpha chains and a single beta E6V substitution.) Tj ET
+BT /F1 10 Tf 72 352.0 Td (5. **Substitution scoring** — BLOSUM62 \(score –2\) plus residue chemistry \(acidic →) Tj ET
+BT /F1 10 Tf 72 340.0 Td (hydrophobic\) quantify severity.) Tj ET
+BT /F1 10 Tf 72 328.0 Td (6. **Homology confirmation** — BLASTP restricted to *Homo sapiens* identifies the secret) Tj ET
+BT /F1 10 Tf 72 316.0 Td (beta chain as a hemoglobin variant \(e.g., Hb Monza/HbS\).) Tj ET
+BT /F1 10 Tf 72 304.0 Td (7. **Structural mapping** — py3Dmol overlays beta6 in 4HHB vs 2HBS, illustrating the) Tj ET
+BT /F1 10 Tf 72 292.0 Td (hydrophobic patch that nucleates HbS polymers.) Tj ET
+BT /F1 10 Tf 72 268.0 Td (Key Findings) Tj ET
+BT /F1 10 Tf 72 256.0 Td (* Alpha-chain comparison shows 100 % identity; beta-chain comparison yields 99.3 %) Tj ET
+BT /F1 10 Tf 72 244.0 Td (identity with a single Glu6Val substitution.) Tj ET
+BT /F1 10 Tf 72 232.0 Td (* BLOSUM62 and physicochemical reasoning classify E6V as a non-conservative, charge-to-) Tj ET
+BT /F1 10 Tf 72 220.0 Td (hydrophobe swap.) Tj ET
+BT /F1 10 Tf 72 208.0 Td (* BLAST and PDB inspection corroborate the secret sequence as a sickle-cell hemoglobin) Tj ET
+BT /F1 10 Tf 72 196.0 Td (variant; structural context explains polymerization propensity.) Tj ET
+BT /F1 10 Tf 72 172.0 Td (Limitations) Tj ET
+BT /F1 10 Tf 72 160.0 Td (* Interaction-network exports remain screenshot-based and live in the appendix; scripting) Tj ET
+BT /F1 10 Tf 72 148.0 Td (is ongoing.) Tj ET
+BT /F1 10 Tf 72 136.0 Td (* No quantitative structural metrics \(RMSD, solvent-accessible surface area\)) Tj ET
+BT /F1 10 Tf 72 124.0 Td (yet—interpretation remains qualitative.) Tj ET
+BT /F1 10 Tf 72 112.0 Td (* Clinical translation, population genetics, and experimental validation are out of scope.) Tj ET
+BT /F1 10 Tf 72 88.0 Td (Reproducibility Plan) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000004731 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+4801
+%%EOF

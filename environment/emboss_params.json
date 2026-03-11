@@ -1,0 +1,11 @@
+﻿{
+  "dotmatcher": {
+    "wordsize": [7, 10, 20],
+    "threshold": [20, 30, 50]
+  },
+  "needle": {
+    "gap_open": [5, 10, 20],
+    "gap_extend": [0.5, 1.0]
+  }
+}
+

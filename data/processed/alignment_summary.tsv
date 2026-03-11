@@ -1,0 +1,4 @@
+comparison,seq_a,seq_b,identity,alignment_length,score,gap_positions,mismatch_positions,alignment_file
+HBA_canonical_vs_secret_alpha,sp|P69905|HBA_HUMAN Hemoglobin subunit alpha OS=Homo sapiens OX=9606 GN=HBA1 PE=1 SV=2,Secret - alpha,100.00,142,733.0,0,None,data/processed/alignments/HBA_canonical_vs_secret_alpha.txt
+HBB_canonical_vs_secret_beta,sp|P68871|HBB_HUMAN Hemoglobin subunit beta OS=Homo sapiens OX=9606 GN=HBB PE=1 SV=2,Secret - beta,99.32,147,773.0,0,7,data/processed/alignments/HBB_canonical_vs_secret_beta.txt
+BRCA1_vs_53BP1,BRCA1 - 1699-1839,53BP1 - 866-1003,6.73,223,12.5,167,"83,85,103,105,106,107,108,109,110,111,113,114,115,119,120,121,126,128,129,130,131,137,138,139,140,142,144,145,149,150,151,152,153,154,156,158,159,160,161,162,163",data/processed/alignments/BRCA1_vs_53BP1.txt

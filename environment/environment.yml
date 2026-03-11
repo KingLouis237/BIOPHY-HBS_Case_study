@@ -1,0 +1,14 @@
+﻿name: hemoglobin-e6v
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - biopython
+  - matplotlib
+  - numpy
+  - emboss
+  - blast
+  - pip
+  - pip:
+      - py3Dmol
+      - pypdf
