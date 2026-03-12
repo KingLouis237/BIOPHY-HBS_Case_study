@@ -141,6 +141,7 @@ flowchart LR
 - Beta-chain alignment reports 99.32% identity with a single mismatch at position 7 (beta6), matching the E6V mutation seen in BLAST hits.
 - BLOSUM62 comparison shows the canonical E->E self-match (+5) vs the E->V penalty (-2), visualized in `figures/fig06_blosum_penalty.png`.
 - Structural contact analysis shows beta6 surrounded by ~1.3-1.4 Angstrom hydrophobic/polar contacts in 4HHB and 2HBS, underscoring how Val6 introduces a surface hydrophobic patch (`reports/structure_summary.md`).
+- For a deeper narrative (why the mutation matters, how to read each output, what conclusions are fair), see `docs/08_biological_interpretation.md`, `docs/09_results_and_discussion.md`, and `docs/05_common_misconceptions.md`.
 
 ## Release Checklist
 - [x] Sequence, alignment, and structure scripts produce tracked TSV/MD outputs.
