@@ -29,7 +29,7 @@ def read_fasta(path: Path) -> Dict[str, str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run BLASTP (local if available, otherwise remote/cached) for the secret beta sequence")
-    parser.add_argument("--secrets", default="data/raw/secret_sequences/TP2_sequences.fasta", help="FASTA containing secret sequences")
+    parser.add_argument("--secrets", default="data/raw/secret_sequences/hemoglobin_secret_sequences.fasta", help="FASTA containing secret sequences")
     parser.add_argument("--target-header", default="Secret - beta", help="Header keyword to extract")
     parser.add_argument("--workdir", default="data/processed/blast", help="Directory for BLAST inputs/outputs")
     parser.add_argument("--db", default="swissprot", help="BLAST database name")

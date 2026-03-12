@@ -1,7 +1,7 @@
 record,source_file,length,hydrophobic_frac,acidic_basic_ratio,acidic_fraction,basic_fraction
 sp|P68871|HBB_HUMAN Hemoglobin subunit beta OS=Homo sapiens OX=9606 GN=HBB PE=1 SV=2,data/raw/uniprot/P68871_HBB_HUMAN.fasta,147,0.585,0.667,0.102,0.156
 sp|P69905|HBA_HUMAN Hemoglobin subunit alpha OS=Homo sapiens OX=9606 GN=HBA1 PE=1 SV=2,data/raw/uniprot/P69905_HBA_HUMAN.fasta,142,0.563,0.520,0.085,0.169
-BRCA1 - 1699-1839,data/raw/secret_sequences/TP2_sequences.fasta,141,0.532,0.810,0.113,0.142
-53BP1 - 866-1003,data/raw/secret_sequences/TP2_sequences.fasta,138,0.464,1.222,0.152,0.123
-Secret - alpha,data/raw/secret_sequences/TP2_sequences.fasta,142,0.563,0.520,0.085,0.169
-Secret - beta,data/raw/secret_sequences/TP2_sequences.fasta,147,0.592,0.625,0.095,0.156
+BRCA1 - 1699-1839,data/raw/secret_sequences/hemoglobin_secret_sequences.fasta,141,0.532,0.810,0.113,0.142
+53BP1 - 866-1003,data/raw/secret_sequences/hemoglobin_secret_sequences.fasta,138,0.464,1.222,0.152,0.123
+Secret - alpha,data/raw/secret_sequences/hemoglobin_secret_sequences.fasta,142,0.563,0.520,0.085,0.169
+Secret - beta,data/raw/secret_sequences/hemoglobin_secret_sequences.fasta,147,0.592,0.625,0.095,0.156

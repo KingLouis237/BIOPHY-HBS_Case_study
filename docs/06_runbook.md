@@ -1,10 +1,10 @@
 # Runbook
 
-Each command assumes you are at the repo root. Use `uv run ...` unless `conda` is explicitly required.
+Each command assumes you are at the repo root. Use `uv run ...` unless `conda` is explicitly required (and make sure `conda activate hemoglobin-e6v` has been run first).
 
 | Step | Command | What it does | Why it matters | Expected outputs | Inspect |
 | --- | --- | --- | --- | --- | --- |
-| 0 | `uv sync` or `conda env create -f environment/environment.yml` | Creates the Python environment with pinned dependencies. | Ensures all scripts run with consistent versions. | `.venv/` (uv) or `hbb-e6v` conda env. | `uv pip list` or `conda list`. |
+| 0 | `uv sync` or `conda env create -f environment/environment.yml` | `uv sync` reads `pyproject.toml`/`uv.lock` and builds `.venv/`; the conda command reads `environment/environment.yml`, creates the `hemoglobin-e6v` env, and installs BLAST/EMBOSS extras. | Ensures all scripts run with the same dependency versions regardless of OS. | `.venv/` (uv) or a named conda env called `hemoglobin-e6v`. | `uv pip list` or `conda list`. |
 | 1 | `uv run python scripts/sequence_summary.py` | Parses FASTA files, computes QC metrics. | Confirms basic sanity before alignment. | `data/processed/sequence_summary.tsv`, `reports/sequence_summary.md`. | Check lengths/hydrophobicity for expected values. |
 | 2 | `uv run python scripts/run_alignments.py --gap-open 10 --gap-extend 0.5` | Runs BRCA1 calibration and hemoglobin alignments. | Quantifies identity and mismatch positions. | `data/processed/alignment_summary.tsv`, textual alignments. | Verify beta mismatch at residue 6. |
 | 3 | `uv run python scripts/make_figures.py` | Generates QC figure + BLOSUM penalty figure. | Visualizes metrics for presentations. | `figures/fig01_sequence_characteristics.png`, `figures/fig06_blosum_penalty.png`. | Open PNGs to ensure labels render. |

@@ -1,7 +1,7 @@
 # Hemoglobin beta E6V Variant — Sequence-to-Structure Interpretation
 
 **Author:** Louis Ashu Abane  
-**Origin:** Reframed from an archived graduate bioinformatics practicum brief (see `docs/archive/INFO-F434_assignment_original.pdf`).  
+**Origin:** Reframed from an archived graduate bioinformatics practicum brief (see `docs/archive/ComputationalBio_Directives.pdf`).  
 **Date reformatted:** 11 March 2026.
 
 ## Context

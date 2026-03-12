@@ -10,7 +10,7 @@ Document a reproducible case study that links the hemoglobin beta6 Glu->Val subs
 4. **Substitution scoring:** `scripts/make_figures.py` visualizes BLOSUM62 penalties; `data/processed/alignment_summary.tsv` records mismatches.
 5. **Homology confirmation:** `scripts/run_blastp.py` prepares the query + CLI command (with offline cache support) and populates BLAST summaries.
 6. **Structural mapping:** `scripts/analyze_structure.py` inspects PDB 4HHB vs 2HBS contacts within 5 Angstroms of beta6, while `scripts/make_structure_figure.py` visualizes the environment.
-7. **Interaction-database caution (appendix):** BioGRID/IntAct screenshots live in `docs/archive/TP2_student_report_original.pdf` to flag database-dependent partner counts until a scripted export lands.
+7. **Interaction-database caution (appendix):** BioGRID/IntAct screenshots live in `docs/archive/ComputationalBio_solutions.pdf` to flag database-dependent partner counts until a scripted export lands.
 
 ## Honest Assessment
 - **Strong:** Sequence, alignment, BLAST, and structure layers are reproducible with logged outputs, figures, and scripts.
@@ -32,4 +32,4 @@ Document a reproducible case study that links the hemoglobin beta6 Glu->Val subs
 - Donkor, A. K., et al. (2023). *Frontiers in Molecular Biosciences* 10:1136970.
 
 ## Provenance
-- Historical references: docs/archive/INFO-F434_assignment_original.pdf and docs/archive/TP2_student_report_original.pdf.
+- Historical references: docs/archive/ComputationalBio_Directives.pdf and docs/archive/ComputationalBio_solutions.pdf.

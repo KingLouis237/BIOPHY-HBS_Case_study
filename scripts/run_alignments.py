@@ -9,9 +9,9 @@ from Bio.Align import substitution_matrices
 Matrix = substitution_matrices.load("BLOSUM62")
 
 PAIR_DEFINITIONS: List[Tuple[str, str, str, str]] = [
-    ("HBA_canonical", "data/raw/uniprot/P69905_HBA_HUMAN.fasta", "secret_alpha", "data/raw/secret_sequences/TP2_sequences.fasta"),
-    ("HBB_canonical", "data/raw/uniprot/P68871_HBB_HUMAN.fasta", "secret_beta", "data/raw/secret_sequences/TP2_sequences.fasta"),
-    ("BRCA1", "data/raw/secret_sequences/TP2_sequences.fasta", "53BP1", "data/raw/secret_sequences/TP2_sequences.fasta"),
+    ("HBA_canonical", "data/raw/uniprot/P69905_HBA_HUMAN.fasta", "secret_alpha", "data/raw/secret_sequences/hemoglobin_secret_sequences.fasta"),
+    ("HBB_canonical", "data/raw/uniprot/P68871_HBB_HUMAN.fasta", "secret_beta", "data/raw/secret_sequences/hemoglobin_secret_sequences.fasta"),
+    ("BRCA1", "data/raw/secret_sequences/hemoglobin_secret_sequences.fasta", "53BP1", "data/raw/secret_sequences/hemoglobin_secret_sequences.fasta"),
 ]
 
 HEADER_KEYS = {

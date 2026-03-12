@@ -11,68 +11,100 @@ This repo walks the hemoglobin beta Glu6Val (E6V) story from primary sequence th
 - **Prompt:** Determine whether an unknown beta-globin sequence corresponds to the sickle-cell variant (E6V) by interrogating sequence QC, alignments, substitution scoring, BLAST hits, and structural context.
 - **Key readouts:** percent identity vs canonical HBB, BLOSUM penalty for E->V, BLAST hit table, residue-6 contact environment in 4HHB vs 2HBS.
 
-## How to Rerun It
-```
-# 0) Install dependencies (conda or uv)
-uv sync  # or conda env create -f environment/environment.yml
+## Getting Set Up (Beginner Friendly)
 
-# 1) Summarize sequences
-uv run python scripts/sequence_summary.py
+**Environment files shipped in this repo**
+- `pyproject.toml` – the list of Python dependencies used by `uv`. `uv sync` reads this file (and generates a local `uv.lock` the first time you run it).
+- `environment/environment.yml` – the conda recipe that includes Python 3.11, Biopython, Matplotlib, NumPy, EMBOSS, BLAST+, and the two small pip add-ons (`py3Dmol`, `pypdf`).
+- `requirements-smoke.txt` – the lean requirements list used by CI; it is handy if you just want to mimic the automated smoke test with plain `pip`.
+- `uv.lock` – **not committed yet** because network-free environments cannot regenerate it. When you run `uv sync` locally it will create one for you inside the repo.
 
-# 2) Run pairwise alignments (HBA/HBB/BRCA1 vs 53BP1)
-uv run python scripts/run_alignments.py --gap-open 10 --gap-extend 0.5
+Need a slower walkthrough? See `docs/setup_for_beginners.md`.
 
-# 3) Generate QC figures (length/hydrophobicity + BLOSUM penalty)
-uv run python scripts/make_figures.py
+### Step 1 – Get the repository onto your machine
+- **With Git:**  
+  ```bash
+  git clone https://github.com/<your-account>/hemoglobin-e6v-case-study.git
+  ```
+  Git keeps the history, so this is the easiest option if you plan to contribute changes.
+- **Without Git:**  
+  Download the ZIP from GitHub (`Code` ▸ `Download ZIP`), unzip it, and a folder with all the files will appear.
 
-# 4) Generate dotplots (BRCA1 calibration + hemoglobin comparisons)
-uv run python scripts/make_dotplots.py
+### Step 2 – Open a terminal inside the project folder
+Use `cd` to move into the folder you just cloned or unzipped (for example `cd hemoglobin-e6v-case-study`). Every command below assumes you are inside this folder so the scripts and data paths resolve correctly.
 
-# 5) Plot canonical vs secret beta alignment (E6V)
-uv run python scripts/make_alignment_figure.py
+### Step 3 – Choose how you want to install Python packages
 
-# 6) Map beta6 contacts in 4HHB vs 2HBS
-uv run python scripts/analyze_structure.py --radius 5.0
+#### Option A – `uv` (fast, no manual activation)
+1. Install `uv` if you do not already have it (`pip install uv` or follow [uv’s install guide](https://github.com/astral-sh/uv)).
+2. Run:
+   ```bash
+   uv sync
+   ```
+   `uv sync` reads `pyproject.toml` (and `uv.lock` if present), downloads the pinned packages, and creates a `.venv/` folder inside the repo. The first run will also generate a local `uv.lock`. You do not need to activate anything manually—every command can be prefixed with `uv run`.
 
-# 7) Visualize beta6 neighborhood (structure scatter)
-uv run python scripts/make_structure_figure.py
+#### Option B – `conda` (or `mamba`)
+1. Make sure Anaconda/Miniconda/Mamba is installed.
+2. Run:
+   ```bash
+   conda env create -f environment/environment.yml
+   ```
+   That command reads the YAML file in `environment/`, builds an environment named `hemoglobin-e6v`, and installs Python plus BLAST/EMBOSS extras that live on conda-forge.
+3. Activate it before running scripts:
+   ```bash
+   conda activate hemoglobin-e6v
+   ```
 
-# 8) Prepare BLAST query + protocol (use --offline to copy the cached XML without hitting BLAST+/NCBI)
-uv run python scripts/run_blastp.py
+If you only want the minimal packages used by CI, you can also run `pip install -r requirements-smoke.txt` in any Python 3.11 environment; it installs Biopython, Matplotlib, and NumPy (you would still need to supply BLAST+ yourself for online runs).
 
-# 9) Plot BLAST hits from cached/current XML
-uv run python scripts/make_blast_figure.py
-```
-Outputs land under `data/processed/` and `reports/`. Figures are written to `figures/fig01_sequence_characteristics.png`, `figures/fig03_dotplots_brca1_53bp1.png`, `figures/fig04a_dotplot_hba_secret.png`, `figures/fig04b_dotplot_hbb_secret.png`, `figures/fig05_beta_variant_alignment.png`, `figures/fig06_blosum_penalty.png`, `figures/fig07_blast_hits.png`, and `figures/fig08_structure_comparison.png`. BRCA1 vs 53BP1 remains as a "tool calibration" checkpoint; it shows how gap penalties behave on low-identity sequences before trusting the hemoglobin alignments. BLAST defaults to a cached XML if neither local BLAST+ nor outbound network is available; the cached artifact lives under `data/raw/reference/blast/`. Interaction-database interpretation is captured separately as a supporting note (see Supporting Notes & Provenance).
+### Step 4 – Run the smoke test
+- **uv path:** `uv run python scripts/sequence_summary.py`
+- **conda path:** `python scripts/sequence_summary.py` (because the environment is already active)
+
+The script reads the versioned FASTA files under `data/raw/{uniprot,secret_sequences}/`, then writes two outputs:
+- `data/processed/sequence_summary.tsv`
+- `reports/sequence_summary.md`
+
+Verify that both files appear and mention the secret alpha/beta records. Once that works, you can run the remaining steps.
+
+## Workflow Run Order (after setup)
+The commands below assume you are either using `uv run python ...` or, if you activated the conda environment, simply `python ...`.
+
+1. **Sequence summary** – `uv run python scripts/sequence_summary.py`  
+   Parses all FASTA files and regenerates `data/processed/sequence_summary.tsv` and `reports/sequence_summary.md`.
+2. **Pairwise alignments** – `uv run python scripts/run_alignments.py --gap-open 10 --gap-extend 0.5`  
+   Runs the BRCA1↔53BP1 calibration plus hemoglobin vs secret alignments; writes `data/processed/alignment_summary.tsv` and plain-text alignments in `data/processed/alignments/`.
+3. **QC figures** – `uv run python scripts/make_figures.py`  
+   Regenerates `figures/fig01_sequence_characteristics.png` and `figures/fig06_blosum_penalty.png`.
+4. **Dotplots** – `uv run python scripts/make_dotplots.py`  
+   Outputs the BRCA1 calibration (`figures/fig03_dotplots_brca1_53bp1.png`) and the two hemoglobin vs secret dotplots (`figures/fig04a/b`).
+5. **Canonical vs secret beta illustration** – `uv run python scripts/make_alignment_figure.py`  
+   Produces `figures/fig05_beta_variant_alignment.png` with the E6V site labeled.
+6. **Structural contacts** – `uv run python scripts/analyze_structure.py --radius 5.0`  
+   Counts residue classes within 5 Å around beta6 and writes `data/processed/structure_contacts.csv` plus `reports/structure_summary.md`.
+7. **Structure figure** – `uv run python scripts/make_structure_figure.py`  
+   Generates `figures/fig08_structure_comparison.png`.
+8. **BLAST artifacts** – `uv run python scripts/run_blastp.py`  
+   Creates `data/processed/blast/secret_beta_query.fasta`, refreshes (or copies) `data/processed/blast/secret_beta_blast.xml`, and logs instructions in `reports/blast_protocol.md`. Use `--offline` if BLAST+ or network access is unavailable.
+9. **BLAST hit visualization** – `uv run python scripts/make_blast_figure.py`  
+   Converts the cached or freshly generated BLAST XML into `figures/fig07_blast_hits.png` and updates `reports/blast_summary.md`.
+
+Outputs land under `data/processed/`, `reports/`, and `figures/`. BRCA1 vs 53BP1 remains as a "tool calibration" checkpoint; it shows how gap penalties behave on low-identity sequences before trusting the hemoglobin alignments. BLAST defaults to the cached XML if neither local BLAST+ nor outbound network is available; the cached artifact lives under `data/raw/reference/blast/`. Interaction-database interpretation is captured separately as a supporting note (see Supporting Notes & Provenance).
+
+### Common Beginner Questions
+- **Do I need Git?** No. Git makes updates easier, but downloading the ZIP from GitHub gives you the exact same files; you just need to unzip them and use `cd` to enter the folder.
+- **What does `uv sync` read?** It reads `pyproject.toml` (and `uv.lock` if it exists) to learn which Python packages and versions to install. If the repo does not ship a lockfile yet, `uv sync` will create one locally after it resolves the dependencies.
+- **What does `conda env create -f environment/environment.yml` read?** It reads the YAML file stored in the `environment/` folder. That file already lists the environment name (`hemoglobin-e6v`), channels (conda-forge), and packages (Python, Biopython, Matplotlib, NumPy, EMBOSS, BLAST, plus two pip extras).
+- **Why do I need to activate an environment?** Activation tells your shell which Python interpreter and site-packages folder to use. Without `conda activate hemoglobin-e6v`, `python` would try to run with whatever packages happen to be installed globally, and the scripts would fail. `uv run` wraps activation for you, which is why it does not require a separate step.
 
 ## Workflow Map
 ```mermaid
 flowchart LR
-    subgraph S[Sequence Evidence]
-        A[Canonical FASTA] --> B[Secret FASTA]
-        B --> C[QC + align]
-        C --> D[Variant summary]
-    end
-
-    subgraph V[Variant Interpretation]
-        D --> E[BLOSUM delta]
-        E --> F[BLAST hits]
-    end
-
-    subgraph F[Structure & Function]
-        F --> G[Contact counts]
-        G --> H[3D comparison]
-    end
-
-    X{{BRCA1 calibration}} -.-> C
-
-    classDef seq fill:#e3f2fd,color:#0d47a1,stroke:#90caf9;
-    classDef var fill:#e8f5e9,color:#1b5e20,stroke:#a5d6a7;
-    classDef struct fill:#fff3e0,color:#ef6c00,stroke:#ffcc80;
-    class A,B,C,D seq;
-    class E,F var;
-    class G,H struct;
-    class X fill:#f3e5f5,color:#6a1b9a,stroke-dasharray:5 5;
+    A[Canonical sequence retrieval<br/>(UniProt HBA/HBB)] --> B[Secret sequence parsing<br/>(source FASTA bundle)]
+    B --> C[Pairwise alignment + dotplots<br/>(BRCA1 calibration, hemoglobin focus)]
+    C --> D[BLOSUM interpretation<br/>(E6V penalty vs self-match)]
+    D --> E[BLAST identification<br/>(secret beta query, cached XML)]
+    E --> F[Structure/function context<br/>(4HHB vs 2HBS contacts + visualization)]
 ```
 1. **Canonical sequence retrieval:** pull P69905 (alpha) and P68871 (beta) from UniProt for clean references.
 2. **Secret sequence comparison:** parse the curated FASTA bundle and align headers/metadata to the canonical set.
@@ -81,36 +113,7 @@ flowchart LR
 5. **BLAST identification:** confirm the secret beta chain's nearest neighbors (HbS/Hb Monza) via reproducible BLAST XML + summary plots.
 6. **Structure/function explanation:** map beta6 contacts and visualize the hydrophobic patch introduced in 2HBS vs 4HHB.
 
-### Alternative Workflow Views
-
-**Minimal chain (good for slides)**
-```mermaid
-flowchart LR
-    S1[FASTAs] --> S2[QC + align]
-    S2 --> S3[BLOSUM]
-    S3 --> S4[BLAST]
-    S4 --> S5[Structure]
-```
-
-**Stacked stages (GitHub-friendly)**
-```mermaid
-flowchart TB
-    subgraph Sequence
-        q1[Canonical FASTA] --> q2[Secret FASTA]
-        q2 --> q3[QC/align]
-    end
-    subgraph Interpretation
-        q3 --> q4[BLOSUM]
-        q4 --> q5[BLAST]
-    end
-    subgraph Structure
-        q5 --> q6[Contacts]
-        q6 --> q7[3D compare]
-    end
-    note1((BRCA1 calibration)) -.-> q3
-```
-
-## What's Automated vs Manual
+## What’s Automated vs Manual
 | Step | Status | Notes |
 | --- | --- | --- |
 | Sequence QC & metadata (scripts/sequence_summary.py) | automated | Produces TSV + Markdown summary with length, hydrophobicity, and charge ratios. |
@@ -146,14 +149,14 @@ flowchart TB
 - [x] Add CI smoke tests (see `.github/workflows/smoke.yml`).
 - [ ] Replace interaction network screenshots with scripted exports (BioGRID/IntAct APIs).
 
-Once the interaction networks are scripted (or clearly cited screenshots), the repo is strong enough for GitHub/LinkedIn; until then, keep the interaction note so reviewers know the remaining manual step.
+
 
 ## CI Smoke Test
 `.github/workflows/smoke.yml` installs a lightweight Python stack (Biopython + Matplotlib) and reruns `scripts/sequence_summary.py`, `scripts/run_alignments.py`, `scripts/make_figures.py`, `scripts/make_dotplots.py`, and `scripts/analyze_structure.py` on every push/PR targeting `main`/`master`.
 
 ## Supporting Notes & Provenance
 - **Interaction evidence:** one-time manual BioGRID vs IntAct comparison retained as a database interpretation note; scripting is on the roadmap.
-- **Source materials:** original briefing and early report are archived verbatim under `docs/archive/INFO-F434_assignment_original.pdf` and `docs/archive/TP2_student_report_original.pdf`.
+- **Source materials:** original briefing, solution write-up, and the untouched FASTA bundle live under `docs/archive/ComputationalBio_Directives.pdf`, `docs/archive/ComputationalBio_solutions.pdf`, and `docs/archive/ComputationalBio_secret_sequences_original.fasta`.
 - **Derived docs:** layered documentation lives in `docs/01_project_at_a_glance.md` through `docs/10_limitations_and_future_work.md`, plus `docs/project_brief.{md,pdf}` (public summary) and `reports/workflow_report.md` (execution log).
 - **References:** `docs/references/references.bib` (e.g., Suhail 2024; Donkor et al. 2023); Biopython pairwise2 emits a deprecation warning—migrate to `Bio.Align.PairwiseAligner` when time permits.
 

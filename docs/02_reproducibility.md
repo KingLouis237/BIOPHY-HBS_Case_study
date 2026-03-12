@@ -6,6 +6,12 @@
 - **Alternative environment:** `conda` or `mamba` when GPU packages or system-wide BLAST+ installs are already managed there.
 - **Core libraries:** Biopython 1.86 (Cock et al. 2009), Matplotlib 3.10, NumPy 2.4, EMBOSS-style scoring matrices, BLAST+ 2.14.
 
+## Environment Manifests
+- `pyproject.toml` &nbsp;— authoritative dependency list for `uv sync`.
+- `uv.lock` &nbsp;— generated locally; not committed because offline builds cannot refresh it.
+- `environment/environment.yml` &nbsp;— conda recipe (`name: hemoglobin-e6v`) that also installs BLAST/EMBOSS binaries.
+- `requirements-smoke.txt` &nbsp;— minimal pip requirements used by CI for the smoke test.
+
 ## Why `uv` First?
 | Reason | Detail |
 | --- | --- |
@@ -21,12 +27,16 @@
 ## Environment Recipes
 ```bash
 # uv workflow (preferred)
-uv sync
+uv sync                        # reads pyproject.toml (and a local uv.lock if present)
 uv run python scripts/sequence_summary.py
 
 # conda workflow
-conda env create -f environment/environment.yml
-conda activate hbb-e6v
+conda env create -f environment/environment.yml   # builds the 'hemoglobin-e6v' env
+conda activate hemoglobin-e6v
+python scripts/sequence_summary.py
+
+# pip fallback (matches CI smoke test)
+python -m pip install -r requirements-smoke.txt
 python scripts/sequence_summary.py
 ```
 

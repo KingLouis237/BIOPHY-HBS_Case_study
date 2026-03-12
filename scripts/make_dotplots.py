@@ -66,7 +66,7 @@ def plot_panel(seq_a: str, seq_b: str, params: List[Tuple[int, int]], title: str
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate dotplot figures for calibration and hemoglobin sequences")
-    parser.add_argument("--secret-fasta", default="data/raw/secret_sequences/TP2_sequences.fasta")
+    parser.add_argument("--secret-fasta", default="data/raw/secret_sequences/hemoglobin_secret_sequences.fasta")
     parser.add_argument("--uniprot-dir", default="data/raw/uniprot")
     parser.add_argument("--output-brca", default="figures/fig03_dotplots_brca1_53bp1.png")
     parser.add_argument("--output-hemo", default="figures/fig04_dotplots_hemoglobin.png")

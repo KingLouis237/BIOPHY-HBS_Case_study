@@ -32,7 +32,7 @@ def chunk_seq(seq: str, size: int = 30) -> List[str]:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Plot canonical vs secret beta alignment highlighting the E6V substitution")
     parser.add_argument("--uniprot", default="data/raw/uniprot/P68871_HBB_HUMAN.fasta")
-    parser.add_argument("--secret", default="data/raw/secret_sequences/TP2_sequences.fasta")
+    parser.add_argument("--secret", default="data/raw/secret_sequences/hemoglobin_secret_sequences.fasta")
     parser.add_argument("--target-header", default="Secret - beta")
     parser.add_argument("--output", default="figures/fig05_beta_variant_alignment.png")
     args = parser.parse_args()
