@@ -100,11 +100,21 @@ Outputs land under `data/processed/`, `reports/`, and `figures/`. BRCA1 vs 53BP1
 ## Workflow Map
 ```mermaid
 flowchart LR
-    A[Canonical sequence retrieval<br/>(UniProt HBA/HBB)] --> B[Secret sequence parsing<br/>(source FASTA bundle)]
-    B --> C[Pairwise alignment + dotplots<br/>(BRCA1 calibration, hemoglobin focus)]
-    C --> D[BLOSUM interpretation<br/>(E6V penalty vs self-match)]
-    D --> E[BLAST identification<br/>(secret beta query, cached XML)]
-    E --> F[Structure/function context<br/>(4HHB vs 2HBS contacts + visualization)]
+    subgraph S[Sequence evidence]
+        A[Canonical sequences]
+        B[Secret bundle]
+    end
+    subgraph V[Variant interpretation]
+        C[Alignments & dotplots]
+        D[BLOSUM context]
+        E[BLAST identity]
+    end
+    subgraph T[Structure context]
+        F[4HHB vs 2HBS contacts]
+    end
+    A --> C
+    B --> C
+    C --> D --> E --> F
 ```
 1. **Canonical sequence retrieval:** pull P69905 (alpha) and P68871 (beta) from UniProt for clean references.
 2. **Secret sequence comparison:** parse the curated FASTA bundle and align headers/metadata to the canonical set.
