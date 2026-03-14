@@ -100,18 +100,13 @@ Outputs land under `data/processed/`, `reports/`, and `figures/`. BRCA1 vs 53BP1
 ## Workflow Map
 ```mermaid
 flowchart LR
-    subgraph S[Sequence evidence]
-        A[Canonical sequences]
-        B[Secret bundle]
-    end
-    subgraph V[Variant interpretation]
-        C[Alignments & dotplots]
-        D[BLOSUM context]
-        E[BLAST identity]
-    end
-    subgraph T[Structure context]
-        F[4HHB vs 2HBS contacts]
-    end
+    A[Canonical sequences]
+    B[Secret bundle]
+    C[Alignments & dotplots]
+    D[BLOSUM context]
+    E[BLAST identity]
+    F[Structure contacts]
+
     A --> C
     B --> C
     C --> D --> E --> F
